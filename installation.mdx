@@ -1,0 +1,138 @@
+---
+title: " Larasonic Installation Guide"
+description: "Get started with Larasonic in just a few steps! Follow the instructions below to set up your environment and start building with the VILT stack."
+icon: "download"
+---
+
+## ✨ Prerequisites
+
+Ensure the following tools are installed on your system before starting:
+
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**
+- **[Docker Compose](https://docs.docker.com/compose/install/)**
+- **[Git](https://git-scm.com/downloads)**
+
+---
+
+## 🚀 Installation
+
+<AccordionGroup>
+  <Accordion title="Install with Laravel Sail + Docker (Recommended)" icon="rocket">
+    Laravel Sail provides an easy way to start your Larasonic development environment with Docker.
+
+    ### First-time Setup
+
+    1. **Clone the Repository**:
+       ```bash
+       git clone git@github.com:pushpak1300/Larasonic.git
+       cd Larasonic
+       ```
+
+    2. **Install Composer Dependencies**:
+       ```bash
+       docker run --rm \
+           -u "$(id -u):$(id -g)" \
+           -v "$(pwd):/var/www/html" \
+           -w /var/www/html \
+           laravelsail/php83-composer:latest \
+           composer install --ignore-platform-reqs
+       ```
+
+    3. **Set Up Environment Variables**:
+       ```bash
+       cp .env.example .env
+       ```
+
+    4. **Start Laravel Sail**:
+       ```bash
+       ./vendor/bin/sail up -d
+       ```
+
+    5. **Run Setup Script**:
+       ```bash
+       ./vendor/bin/sail composer run setup
+       ```
+
+    - For detailed documentation on Laravel Sail, visit:
+      [Laravel Sail Documentation](https://laravel.com/docs/sail)
+
+    ### Optional: Shell Alias for Sail
+    Add this alias to `~/.bashrc` or `~/.zshrc` for convenience:
+    ```bash
+    alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
+    ```
+
+  </Accordion>
+
+  <Accordion title="Install with Laravel Herd" icon="bars">
+    **[Laravel Herd](https://herd.laravel.com/)** provides a lightweight local environment for PHP development.
+
+    ### Steps for Herd Installation
+    1. **Clone the Repository in Herd Sites Directory**:
+       ```bash
+       git clone git@github.com:pushpak1300/Larasonic.git ~/Herd/larasonic
+       ```
+
+    2. **Visit in Browser**:
+       Open your browser and navigate to:
+       ```text
+       larasonic.test
+       ```
+
+    Follow the manual installation steps below to complete the setup.
+
+  </Accordion>
+
+  <Accordion title="Manual Installation (Advanced)" icon="toolbox">
+    If you prefer not to use Docker or Herd, you can set up Larasonic manually.
+
+    ### Steps for Manual Setup
+
+    1. **Clone the Repository**:
+       ```bash
+       git clone git@github.com:pushpak1300/Larasonic.git
+       cd Larasonic
+       ```
+
+    2. **Install Composer Dependencies**:
+       ```bash
+       composer install
+       ```
+
+    3. **Set Up Environment Variables**:
+       ```bash
+       cp .env.example .env
+       ```
+
+    4. **Setup Application**:
+       ```bash
+       composer run setup
+       ```
+
+    5. **Serve the Application**:
+       - Using Octane:
+         ```bash
+         php artisan octane:start --watch
+         ```
+       - Using the built-in PHP server:
+         ```bash
+         php artisan serve
+         ```
+
+
+    Your application will now be available at `http://127.0.0.1:8000`.
+
+  </Accordion>
+</AccordionGroup>
+
+Once you've installed Larasonic using your preferred method, you're ready to start building! For additional configuration and advanced features, explore the rest of the documentation.
+
+---
+
+## 🔒 Logging into your Application
+After installing Wave, you should automatically be logged in as the admin user. If you need to log in again, you can use the following credentials:
+
+```text
+email: test@example.com
+password: password
+```
