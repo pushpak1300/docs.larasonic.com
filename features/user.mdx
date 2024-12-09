@@ -1,0 +1,40 @@
+---
+title: 'User Management / Auth'
+description: 'Handle user authentication and profiles'
+icon: 'user'
+---
+
+## 🔐 Authentication
+
+User authentication is powered by Laravel Fortify and Jetstream. Apart from it provides social authentication (Laravel Socialite) out of the box.
+
+<Tip>
+See [Jetstream/Fortify Documentation](https://jetstream.laravel.com/features/authentication.html) for more details
+</Tip>
+
+
+### 🔄 Social/2FA Authentication
+
+We support OAuth login with the following providers:
+
+- GitHub
+- GitLab
+- X
+- Google
+- Bitbucket
+- Discord
+
+<Info>
+Configure OAuth providers in `config/oauth.php`
+</Info>
+
+Feel free to add more custom providers in `config/oauth.php`. 
+
+Checkout `app/Http/Controllers/User/OauthController.php` which handles the OAuth.
+Feel free to customize it to your needs. 
+
+
+## 🪄 Magic Link
+
+Coming soon. In The [Roadmap](https://github.com/pushpak1300/Larasonic/discussions/categories/roadmap).
+

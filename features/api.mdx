@@ -1,0 +1,66 @@
+---
+title: 'API'
+description: 'API features in Larasonic'
+icon: 'terminal'
+---
+
+Larasonic comes with built-in API capabilities powered by Laravel Sanctum, allowing you to easily create and manage API tokens for authentication. It also includes automatic API documentation generation using Scribe.
+
+## 🔑 API Authentication
+
+Larasonic uses Laravel Sanctum for API authentication. You can generate tokens in two ways:
+
+### Via Web Interface
+
+Visit `/api/tokens` in your browser to manage API tokens (requires appropriate permissions). Here you can:
+- Create new tokens with specific abilities
+- View existing tokens
+- Revoke tokens
+
+### Via API
+This is not supported yet. Please let us know if you need this feature in the [roadmap](https://github.com/pushpak1300/Larasonic/discussions/categories/roadmap)
+
+### Using Tokens
+
+Include the token in your API requests:
+
+```bash
+curl -X GET \
+    -H "Authorization: Bearer 1|LMcaJ5gzKz4GwqPN4Yh8lPgQxdEoHq4Sn6g4YXxM" \
+    -H "Accept: application/json" \
+    https://your-domain.com/api/user
+```
+
+
+<Tip>
+For more details on API authentication, check out the [Laravel Sanctum documentation](https://laravel.com/docs/11.x/sanctum).
+</Tip>
+## 📚 API Documentation
+
+Larasonic uses Scribe to automatically generate comprehensive API documentation. This includes:
+
+- Interactive API documentation
+- Postman collection export
+- OpenAPI (Swagger) specification
+- Request/response examples
+
+To generate the documentation:
+
+```bash
+php artisan scribe:generate
+```
+
+The docs will be available at `/docs` by default.
+
+## 🔍 Example Endpoints
+
+Here's a sample API endpoint from the `app/Http/Controllers/ApiUserController.php`:
+
+```php
+Route::apiResource('user', ApiUserController::class)->middleware('auth:sanctum');
+```
+
+
+<Tip>
+For API documentation features, visit the [Scribe documentation](https://scribe.knuckles.wtf/laravel/).
+</Tip>

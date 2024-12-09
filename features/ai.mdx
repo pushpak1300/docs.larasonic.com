@@ -1,0 +1,121 @@
+---
+title: 'AI Integration'
+description: 'Integrate AI capabilities into your Larasonic application using Prism'
+icon: 'robot'
+---
+
+Larasonic comes with built-in AI capabilities powered by [Prism](https://prism.echolabs.dev), allowing you to easily integrate various LLMs (Large Language Models) into your application.
+
+## ⚙️ Configuration
+
+The Prism configuration is located in `config/prism.php`:
+
+```php:config/prism.php
+return [
+    'default' => env('PRISM_PROVIDER', 'openai'),
+    
+    'providers' => [
+        'openai' => [
+            'api_key' => env('OPENAI_API_KEY'),
+            'model' => env('OPENAI_MODEL', 'gpt-4-turbo-preview'),
+        ],
+        'anthropic' => [
+            'api_key' => env('ANTHROPIC_API_KEY'),
+            'model' => env('ANTHROPIC_MODEL', 'claude-3-opus-20240229'),
+        ],
+        'ollama' => [
+            'host' => env('OLLAMA_HOST', 'http://localhost:11434'),
+            'model' => env('OLLAMA_MODEL', 'llama2'),
+        ],
+    ],
+];
+```
+
+## 🚀 Basic Usage
+
+Generate text using any configured provider:
+
+```php
+use Echolabs\Prism\Facades\Prism;
+
+// Simple completion
+$response = Prism::generate('Summarize this article: ...');
+
+// With system prompt
+$response = Prism::systemPrompt('You are a helpful assistant')
+    ->generate('What is Laravel?');
+
+// Switch providers on the fly
+$response = Prism::provider('anthropic')
+    ->generate('Complex analysis needed...');
+```
+
+## 🏗️ Structured Output
+
+Get typed responses using schemas:
+
+```php
+use Echolabs\Prism\Schema;
+
+class UserProfile extends Schema
+{
+    public string $name;
+    public int $age;
+    public array $interests;
+}
+
+$profile = Prism::schema(UserProfile::class)
+    ->generate('Extract profile: John is 25 and loves coding, gaming');
+
+echo $profile->name; // "John"
+echo $profile->age; // 25
+```
+
+## 🛠️ Tools & Function Calling
+
+Extend AI capabilities with custom tools:
+
+```php
+$response = Prism::withTools([
+    'search_users' => function (string $query) {
+        return User::search($query)->get();
+    },
+])->generate('Find active users named John');
+```
+
+## 🧪 Testing
+
+Fake AI responses in your tests:
+
+```php
+use Echolabs\Prism\Facades\Prism;
+
+Prism::fake([
+    'What is Laravel?' => 'Laravel is a web framework...'
+]);
+
+// Or fake with callbacks
+Prism::fake(function ($prompt) {
+    return str_contains($prompt, 'weather') 
+        ? 'It is sunny' 
+        : 'Default response';
+});
+```
+
+## 🖼️ Multi-Modal Support
+
+Work with images alongside text:
+
+```php
+// Vision capabilities
+$response = Prism::withImage('path/to/image.jpg')
+    ->generate('Describe this image');
+
+// Generate images
+$image = Prism::provider('openai')
+    ->generateImage('A sunset over mountains');
+```
+
+<Tip>
+For more detailed information and advanced usage, visit the [Prism documentation](https://prism.echolabs.dev).
+</Tip>

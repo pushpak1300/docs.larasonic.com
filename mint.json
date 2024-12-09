@@ -2,8 +2,8 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Larasonic",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/full-logo.webp",
+    "light": "/logo/full-logo-dark.webp"
   },
   "favicon": "/favicon.svg",
   "colors": {
@@ -53,14 +53,15 @@
     {
       "group": "Features",
       "pages": [
-        "features/authentication",
-        "features/authorization",
-        "features/admin-dashboard",
+        "features/user",
         "features/teams",
-        "features/social-login",
-
-        "features/subscription-management"
-
+        "features/mail",
+        "features/admin",
+        "features/ai",
+        "features/roles-and-permission",
+        "features/api",
+        "features/sitemap",
+        "features/subscriptions"
       ]
     },
     {

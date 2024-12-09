@@ -1,0 +1,33 @@
+---
+title: "Admin Panel"
+description: "Powerful admin interface powered by Filament"
+icon: "user-tie"
+---
+
+## 🛡️ Overview
+
+Larasonic comes with a powerful admin panel built on [Filament](https://filamentphp.com), giving you a beautiful interface to manage your application.
+
+## 👤 Accessing the Admin Panel
+
+By default, the admin panel is accessible at `/admin` in local environment.
+In Production, you need to modify the `canAccessPanel` method in your User model.
+
+```php
+public function canAccessPanel(Panel $panel): bool
+{
+  return user()->is_admin;
+}
+```
+
+## 🎯 Best Practices
+
+- Create specific admin roles with limited permissions
+- Use resource policies to control access
+- Add custom validation rules
+- Enable audit logging for sensitive operations
+
+<Tip>
+  For advanced configuration and features, check out the [Filament
+  Documentation](https://filamentphp.com/docs)
+</Tip>

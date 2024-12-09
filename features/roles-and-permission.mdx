@@ -1,0 +1,57 @@
+---
+title: 'Roles & Permissions'
+description: 'Understanding roles and permissions in Larasonic'
+icon: 'key'
+---
+
+# 🔑 Roles & Permissions
+
+Larasonic uses Jetstream's simple RBAC (Role-Based Access Control) implementation. While not as feature-rich as dedicated packages like Spatie Permissions, it provides a straightforward way to manage team-based roles and permissions.
+
+<Tip>
+For more detailed information and advanced usage, visit the [Laravel Jetstream](https://jetstream.laravel.com/features/teams.html#roles-permissions)
+</Tip>
+
+## 🛠️ Current Implementation
+
+Each team member can be assigned a role, and each role has specific permissions. Roles and permissions are defined in `App\Providers\JetstreamServiceProvider`.
+
+```php:app/Providers/JetstreamServiceProvider.php
+Jetstream::defaultApiTokenPermissions(['read']);
+
+Jetstream::role('admin', 'Administrator', [
+    'create',
+    'read',
+    'update',
+    'delete',
+])->description('Administrator users can perform any action.');
+
+Jetstream::role('editor', 'Editor', [
+    'read',
+    'create',
+    'update',
+])->description('Editors can read, create and update content.');
+```
+
+## ✅ Checking Permissions
+
+You can check permissions using the methods provided by the `HasTeams` trait:
+
+```php
+// Check if user has specific permission
+$user->hasTeamPermission($team, 'create');
+
+// Get user's role on team
+$user->teamRole($team);
+
+// Check if user has specific role
+$user->hasTeamRole($team, 'admin');
+```
+
+## 🔄 Looking for More?
+
+Need a more robust roles and permissions system? Vote for enhanced RBAC features in our [roadmap](https://github.com/pushpak1300/Larasonic/discussions/categories/roadmap).
+
+<Note>
+The current implementation is suitable for basic team-based permission scenarios. For complex permission requirements, consider implementing a dedicated package like Spatie Permissions.
+</Note>

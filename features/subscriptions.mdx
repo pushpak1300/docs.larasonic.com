@@ -1,0 +1,50 @@
+---
+title: "Subscriptions"
+description: "Integrate subscription with Cashier"
+icon: 'money-bill'
+---
+
+<Warning>
+The feature is currently in beta and actively being developed.
+</Warning>
+
+Larasonic provides subscription functionality powered by Laravel Cashier and Stripe. 
+
+<Tip>
+For more info, visit: [Laravel Cashier](https://laravel.com/docs/cashier)
+</Tip>
+
+## ⚙️ Configuration
+
+Subscriptions are configured in `config/subscription.php`:
+
+```php
+[
+  'plan' => 'Larasonic Basic 🚀',
+  'description' => 'The best plan for individuals who want to explore demo subscription.',
+  'price_id' => 'price_1QTQldHNOPjoTPj1vVHORPs9', // price id from stripe
+  'price' => 5,
+  'features' => [
+    'Example Basic Feature 1',
+    'Example Basic Feature 2',
+    'Example Basic Feature 3',
+    'Example Basic Feature 4',
+    'Example Basic Feature 5',
+    'Example Basic Feature 6',
+  ],
+],
+```
+
+## 🎮 Demo Implementation
+
+The [larasonic demo](https://larasonic.com) showcases subscription-gated features - for example, the chat functionality is only available to users subscribed to the Pro plan.
+
+## 🗺️ Roadmap
+
+Subscription functionality is actively being developed. Check the [project roadmap](https://github.com/pushpak1300/Larasonic/discussions/categories/roadmap) for upcoming features and changes.
+
+## ⚠️ Current Limitations
+
+- Only Stripe is supported as a payment provider
+- Limited to basic subscription plans
+- Beta functionality subject to changes

@@ -1,0 +1,42 @@
+---
+title: 'Email'
+description: 'Configure emails with Laravel Mail'
+icon: 'envelope'
+---
+
+Larasonic Demo uses [Resend](https://resend.com) as our primary email provider for all transactional emails. Resend offers excellent deliverability and a modern API. 
+
+You're free to use a different provider, check the [Laravel Mail Documentation](https://laravel.com/docs/mail) for more options.
+
+## ⚙️ Configuration
+
+Add these variables to your `.env` file:
+
+```env
+MAIL_MAILER=resend
+MAIL_FROM_ADDRESS="you@yourdomain.com"
+MAIL_FROM_NAME="${APP_NAME}"
+RESEND_API_KEY=re_xxxx # Get this from Resend dashboard
+```
+
+## 🧪 Testing Emails Locally 
+
+We recommend using [Mailpit](https://github.com/axllent/mailpit) for local email testing:
+
+1. Install Mailpit
+2. Update your `.env`:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=localhost
+MAIL_PORT=1025
+```
+3. Emails will be caught by Mailpit's interface at `http://localhost:8025`
+
+<Info>
+For more details, check out: 📘 [Resend Documentation](https://resend.com/docs)
+</Info>
+<Info>
+For more details, check out: 📗 [Laravel Mail Documentation](https://laravel.com/docs/mail)
+</Info>
+

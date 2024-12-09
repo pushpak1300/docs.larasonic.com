@@ -1,0 +1,32 @@
+---
+title: "Sitemap"
+description: "Generate and manage XML sitemaps in Larasonic"
+icon: "map"
+---
+
+# 🗺️ Sitemap
+
+Larasonic makes sitemap generation simple using [spatie/laravel-sitemap](https://github.com/spatie/laravel-sitemap).
+
+## 🔄 Generate Sitemap
+
+```bash
+php artisan generate:sitemap
+```
+
+This creates `sitemap.xml` in your public folder using your `APP_URL`.
+
+To generate a production sitemap locally, modify the `$url` variable in `app/Console/Commands/GenerateSitemap.php`.
+
+<Card>
+Larasonic automatically schedules daily sitemap generation in `routes/console.php`:
+
+```php:routes/console.php
+// Automatically generate sitemap daily at midnight
+Schedule::command('generate:sitemap')->daily();
+```
+</Card>
+
+<Tip>
+Submit your sitemap to [Google Search Console](https://search.google.com/search-console/sitemap)
+</Tip>
