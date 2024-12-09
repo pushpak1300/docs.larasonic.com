@@ -39,15 +39,21 @@ Generate text using any configured provider:
 use Echolabs\Prism\Facades\Prism;
 
 // Simple completion
-$response = Prism::generate('Summarize this article: ...');
+$response = Prism::text()
+  ->withPrompt('Summarize this article: ...')
+  ->generate();
 
 // With system prompt
-$response = Prism::systemPrompt('You are a helpful assistant')
-    ->generate('What is Laravel?');
+$response = Prism::text()
+  ->systemPrompt('You are a helpful assistant')
+  ->withPrompt('What is Laravel?')
+  ->generate();
 
 // Switch providers on the fly
-$response = Prism::provider('anthropic')
-    ->generate('Complex analysis needed...');
+$response = Prism::text()
+  ->using('anthropic', 'claude-3-5-sonnet-latest')
+  ->withPrompt('Complex analysis needed...')
+  ->generate();
 ```
 
 ## 🏗️ Structured Output
@@ -55,20 +61,33 @@ $response = Prism::provider('anthropic')
 Get typed responses using schemas:
 
 ```php
-use Echolabs\Prism\Schema;
+use EchoLabs\Prism\Prism;
+use EchoLabs\Prism\Schema\ObjectSchema;
+use EchoLabs\Prism\Schema\StringSchema;
+use EchoLabs\Prism\Schema\ArraySchema;
+use EchoLabs\Prism\Schema\NumberSchema;
 
-class UserProfile extends Schema
-{
-    public string $name;
-    public int $age;
-    public array $interests;
-}
+$schema = new ObjectSchema(
+  name: 'user',
+  description: 'a user object',
+  properties: [
+    new StringSchema('name', "the user's name"),
+    new NumberSchema('age', "the user's age"),
+    new ArraySchema(
+      name: 'interests',
+      description: "The user's interests",
+      items: new StringSchema('interest', "a user's interests")
+    )
+  ]
+);
 
-$profile = Prism::schema(UserProfile::class)
-    ->generate('Extract profile: John is 25 and loves coding, gaming');
+$profile = Prism::structured()
+    ->withSchema($schema)
+    ->withPrompt('Extract profile: John is 25 and loves coding, gaming')
+    ->generate()
 
-echo $profile->name; // "John"
-echo $profile->age; // 25
+echo $profile['name']; // "John"
+echo $profile['age']; // 25
 ```
 
 ## 🛠️ Tools & Function Calling
@@ -76,11 +95,21 @@ echo $profile->age; // 25
 Extend AI capabilities with custom tools:
 
 ```php
-$response = Prism::withTools([
-    'search_users' => function (string $query) {
-        return User::search($query)->get();
-    },
-])->generate('Find active users named John');
+use EchoLabs\Prism\Prism;
+use EchoLabs\Prism\Facades\Tool;
+
+$searchTool = Tool::as('search')
+    ->for('Search for current information')
+    ->withParameter('query', 'The search query')
+    ->using(function (string $query): string {
+        // Your search implementation
+        return "Search results for: {$query}";
+    });
+
+$response = Prism::text()
+  ->withTools([$weatherTool])
+  ->withPrompt('What will the wetather be for the football match today?')
+  ->generate();
 ```
 
 ## 🧪 Testing
@@ -88,17 +117,32 @@ $response = Prism::withTools([
 Fake AI responses in your tests:
 
 ```php
-use Echolabs\Prism\Facades\Prism;
+use EchoLabs\Prism\Facades\Prism;
+use EchoLabs\Prism\ValueObjects\Usage;
+use EchoLabs\Prism\Enums\FinishReason;
+use EchoLabs\Prism\Providers\ProviderResponse;
 
-Prism::fake([
-    'What is Laravel?' => 'Laravel is a web framework...'
-]);
+it('can generate text', function () {
+    // Create a fake provider response
+    $fakeResponse = new ProviderResponse(
+        text: 'Hello, I am Claude!',
+        toolCalls: [],
+        usage: new Usage(10, 20),
+        finishReason: FinishReason::Stop,
+        response: ['id' => 'fake-1', 'model' => 'fake-model']
+    );
 
-// Or fake with callbacks
-Prism::fake(function ($prompt) {
-    return str_contains($prompt, 'weather') 
-        ? 'It is sunny' 
-        : 'Default response';
+    // Set up the fake
+    $fake = Prism::fake([$fakeResponse]);
+
+    // Run your code
+    $response = Prism::text()
+        ->using('anthropic', 'claude-3-sonnet')
+        ->withPrompt('Who are you?')
+        ->generate();
+
+    // Make assertions
+    expect($response->text)->toBe('Hello, I am Claude!');
 });
 ```
 
@@ -107,13 +151,18 @@ Prism::fake(function ($prompt) {
 Work with images alongside text:
 
 ```php
-// Vision capabilities
-$response = Prism::withImage('path/to/image.jpg')
-    ->generate('Describe this image');
+use EchoLabs\Prism\ValueObjects\Messages\Support\Image;
 
-// Generate images
-$image = Prism::provider('openai')
-    ->generateImage('A sunset over mountains');
+// From a URL
+$message = new UserMessage(
+    'Analyze this diagram:',
+    [Image::fromUrl('https://example.com/diagram.png')]
+);
+
+$response = Prism::text()
+    ->using(Provider::Anthropic, 'claude-3-sonnet')
+    ->withMessages([$message])
+    ->generate();
 ```
 
 <Tip>
