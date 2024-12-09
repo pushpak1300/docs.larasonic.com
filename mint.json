@@ -15,6 +15,24 @@
       "to": "#F7F7F8"
     }
   },
+  "metadata": {
+    "og:site_name": "Larasonic",
+    "og:title": "Larasonic - Modern Laravel SaaS Starter Kit",
+    "og:description": "Launch your SaaS faster with Larasonic - A feature-rich Laravel starter kit with Teams, Billing, API, and AI capabilities built-in.",
+    "og:image": "/images/og.webp",
+    "og:locale": "en_US",
+    "og:logo": "/logo/full-logo.webp",
+    "article:publisher": "https://docs.larasonic.com",
+    "twitter:title": "Larasonic - Modern Laravel SaaS Starter Kit",
+    "twitter:description": "Launch your SaaS faster with Larasonic - A feature-rich Laravel starter kit with Teams, Billing, API, and AI capabilities built-in.",
+    "twitter:image": "/images/og.webp",
+    "twitter:site": "@pushpak1300",
+    "og:image:width": "1200",
+    "og:image:height": "630"
+  },
+  "seo": {
+    "indexHiddenPages": true
+  },
   "topbarCtaButton": {
     "name": "View Demo",
     "url": "https://larasonic.com"
