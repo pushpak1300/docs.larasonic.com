@@ -1,16 +1,18 @@
-# Mintlify Starter Kit
+# Larasonic Documentation
 
-Click on `Use this template` to copy the Mintlify starter kit. The starter kit contains examples including
+Official documentation for Larasonic, available at [docs.larasonic.com](https://docs.larasonic.com).
 
-- Guide pages
-- Navigation
-- Customizations
-- API Reference pages
-- Use of popular components
+This repository contains the documentation for Larasonic, built with Mintlify. The documentation covers:
 
-### Development
+- Installation guides
+- Feature documentation
+- API references
+- Development guides
+- Deployment instructions
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
+### Local Development
+
+Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview documentation changes:
 
 ```
 npm i -g mintlify
@@ -28,5 +30,5 @@ Install our Github App to auto propagate changes from your repo to your deployme
 
 #### Troubleshooting
 
-- Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
+- Mintlify dev isn't running - Run `mintlify install` to re-install dependencies.
 - Page loads as a 404 - Make sure you are running in a folder with `mint.json`
