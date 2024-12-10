@@ -95,5 +95,9 @@
     "x": "https://x.com/pushpak1300",
     "github": "https://github.com/pushpak1300",
     "website": "https://larasonic.com"
+  },
+  "feedback": {
+    "suggestEdit": true,
+    "raiseIssue": true
   }
 }
