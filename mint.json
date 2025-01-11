@@ -79,6 +79,7 @@
         "features/roles-and-permission",
         "features/api",
         "features/sitemap",
+        "features/dockerfile",
         "features/subscriptions"
       ]
     },
