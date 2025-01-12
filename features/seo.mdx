@@ -1,0 +1,116 @@
+---
+title: "SEO"
+description: "Enhanced SEO capabilities in Larasonic."
+icon: "magnifying-glass"
+---
+
+# 🔍 SEO
+Larasonic provides enhanced SEO capabilities beyond standard Inertia.js head management by leveraging [Unhead.js](https://unhead.unjs.io/) under the hood.
+This gives you more powerful and flexible SEO management across your application.
+
+<Warning>
+  If you prefer a simpler approach, you can still use Laravel Inertia's default Head component to manage titles and meta tags. See the [Inertia.js documentation](https://inertiajs.com/title-and-meta) for details.
+</Warning>
+
+## 🚀 Usage
+
+Larasonic provides a convenient `useSeoMetaTags` composable for managing SEO meta tags - it's a wrapper around [useSeoMeta](https://unhead.unjs.io/usage/composables/use-seo-meta) from the UnHead library so feel free to customize it to your needs:
+
+```js
+import { useSeoMetaTags } from '@/Composables/useSeoMetaTags.js'
+
+// Use default SEO meta tags
+useSeoMetaTags()
+
+// Override specific meta tags
+useSeoMetaTags({
+  title: 'My Page',
+  description: 'Page description',
+  ogImage: '/path/to/image.jpg'
+})
+
+// Complete custom SEO without defaults
+useSeoMetaTags({
+  title: 'Custom Page',
+  description: 'Custom description'
+}, { merge: false })
+```
+
+<Tip>
+Default SEO meta tags can be configured in `resources/js/Composables/useSeoMetaTags.js`
+</Tip>
+
+## ⚙️ Configuration
+
+The `useSeoMetaTags` composable accepts two parameters:
+
+- `seoMeta` (object|null): Custom SEO meta tags to apply
+- `options` (object): 
+  - `merge` (boolean): When true, merges custom meta tags with defaults. When false, only uses provided meta tags.
+
+## 🏷️ Supported Meta Tags
+
+Larasonic supports all meta & title tags from [unhead](https://zhead.dev/collection/seo) including:
+
+- Basic meta tags (title, description)
+- Open Graph tags (og:title, og:description, og:image, etc)
+- Twitter Card tags (twitter:card, twitter:title, etc)
+- Robots directives
+- And more
+
+## 🔄 Backend Integration
+
+You can also manage SEO tags by passing them from your Laravel backend. Here's how:
+
+<CodeGroup>
+
+```php app/Http/Controllers/WelcomeController.php
+public function index()
+{
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'seo' => [
+            'title' => 'Welcome to My App',
+            'description' => 'A Laravel application with powerful SEO capabilities',
+            'ogImage' => asset('images/og-image.jpg')
+        ]
+    ]);
+}
+```
+
+```js resources/js/Pages/Welcome.vue
+<script setup>
+import { useSeoMetaTags } from '@/Composables/useSeoMetaTags'
+
+const props = defineProps({
+  canLogin: Boolean,
+  canRegister: Boolean,
+  seo: {
+    type: Object,
+    default: () => null,
+  },
+})
+
+// Use SEO meta tags passed from backend
+useSeoMetaTags(props.seo)
+</script>
+```
+
+</CodeGroup>
+
+This approach allows you to:
+- Generate dynamic SEO tags based on your backend data
+- Reuse existing backend logic for SEO
+- Maintain consistency between backend and frontend SEO management
+
+
+## 🤖 AI-Powered SEO Generation
+
+Larasonic has partnered with [SEOExpert](https://tryseoexpert.com/) to provide AI-powered SEO tag generation. This integration helps you:
+
+- Automatically generate optimized meta tags
+- Get keyword suggestions based on your content
+- Analyze and improve your SEO strategy
+
+Try it out at [app.tryseoexpert.com](https://app.tryseoexpert.com/) to supercharge your SEO efforts.
