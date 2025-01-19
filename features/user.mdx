@@ -34,7 +34,25 @@ Checkout `app/Http/Controllers/User/OauthController.php` which handles the OAuth
 Feel free to customize it to your needs. 
 
 
-## 🪄 Magic Link
+### 🪄 Login Link
 
-Coming soon. In The [Roadmap](https://github.com/pushpak1300/Larasonic/discussions/categories/roadmap).
+Login links let users sign in without passwords by clicking a secure link sent to their email. The link expires after a set time for security.
+
+To enable Login Links:
+1. Configure email settings in `.env`
+2. Checkout the following controller at `app/Http/Controllers/User/LoginLinkController.php`
+3. Checkout the following routes at `routes/web.php`
+```php
+use App\Http\Controllers\User\LoginLinkController;
+// Magic Link
+Route::middleware('throttle:login-link')->group(function () {
+    // ...
+    Route::post('/login-link', [LoginLinkController::class, 'store'])->name('login-link.store');
+    Route::get('/login-link/{token}', [LoginLinkController::class, 'login'])->name('login-link.login');
+});
+```
+
+<Warning>
+The routes are protected with a rate limit middleware `throttle:login-link`. Customize this rate limit according to your application's needs.
+</Warning>
 
